@@ -5,7 +5,7 @@
 
 
 # useful for handling different item types with a single interface
-from itemadapter import ItemAdapter
+
 
 
 import csv
@@ -15,12 +15,15 @@ class CSVPipeline(object):
     def __init__(self):
         self.csvfile = open('zillow.csv','a+',encoding='utf-8',newline='')
         self.writer = csv.writer(self.csvfile)
-        self.writer.writerow(('Address','Type','Price','Size','Bedrooms','Bathrooms','Days on Zillow','Brokerage'))
+        self.writer.writerow(('Street','City_State_ZipCode','Price','Bedrooms','Bathrooms','Size','Lot Size','Type',
+                              'Price per Sqft','Year','Neighborhood','Time on Zillow','Views','Saves'))
         self.csvfile.close()
 
     def process_item(self,item,spider):
         with open('zillow.csv','a+',encoding='utf-8',newline='')as f:
             writer = csv.writer(f)
-            writer.writerow((item['address'],item['type'],item['price'],item['size'],item['bedrooms'],
-                             item['bathrooms'],item['days_on_zillow'],item['brokerage']))
+            writer.writerow( (item['street'], item['city_state'],item['price'],item['bedrooms'],item['bathrooms'],
+                              item['size'],item['lot_size'],item['type'],item['price_per_sqft'],item['year'],
+                              item['neighborhood'],item['time_on_zillow'],item['views'],item['saves']))
         return item
+
